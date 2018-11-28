@@ -30,24 +30,23 @@
 User
 >
  getUsers(@QueryParam("uid") int uid);
- 
+
      @GET
      @Path("/primitive")
      @Produces(MediaType.TEXT_PLAIN)
      String testPrimitiveType();
- 
+
      @POST
      @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
      @Produces(MediaType.APPLICATION_JSON)
      Response add(@FormParam("id") int id, @FormParam("name") String name);
-
 ```
 
 具体的服务实现如下：
 
 ```
 public class RestfulServerDemo implements RestfulService {
-        
+
      @Override
      public List
 <
@@ -56,17 +55,16 @@ User
  getUsers(@CookieParam("uid") int uid) {
          return Arrays.asList(new User(uid, "name" + uid));
      }
- 
+
      @Override
      public String testPrimitiveType() {
          return "helloworld!";
      }
- 
+
      @Override
      public Response add(@FormParam("id") int id, @FormParam("name") String name) {
          return Response.ok().cookie(new NewCookie("ck", String.valueOf(id))).entity(new User(id, name)).build();
      }
-
 ```
 
 服务提供者这一端通过部署代码到Tomcat中，并配置Tomcat中如下的web.xml，就可以通过servlet的方式对外提供RESTful API。
@@ -177,7 +175,6 @@ url-pattern
 public interface FooService {
     public String hello(String name);
 }
-
 ```
 
 然后服务提供者实现接口。
@@ -190,7 +187,6 @@ public class FooServiceImpl implements FooService {
         return "hello " + name;
     }
 }
-
 ```
 
 最后服务提供者进程启动时，加载server.xml配置文件，开启8002端口监听。
@@ -238,7 +234,6 @@ public class Server {
         System.out.println("server start...");
     }
 }
-
 ```
 
 服务消费者要想调用服务，就必须在进程启动时，加载配置client.xml，引用接口定义，然后发起调用。
@@ -282,7 +277,6 @@ public class Client {
         System.out.println(service.hello("motan"));
     }
 }
-
 ```
 
 就这样，通过在服务提供者和服务消费者之间维持一份对等的XML配置文件，来保证服务消费者按照服务提供者的约定来进行服务调用。在这种方式下，如果服务提供者变更了接口定义，不仅需要更新服务提供者加载的接口描述文件server.xml，还需要同时更新服务消费者加载的接口描述文件client.xml。
@@ -318,8 +312,7 @@ message HelloRequest {
 // The response message containing the greetings
 message HelloReply {
   string message = 1;
-}  
-
+}
 ```
 
 假如服务提供者使用的是Java语言，那么利用protoc插件即可自动生成Server端的Java代码。
@@ -328,28 +321,19 @@ message HelloReply {
 private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
 
   @Override
-  public void sayHello(HelloRequest req, StreamObserver
-<
-HelloReply
->
- responseObserver) {
+  public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
     HelloReply reply = HelloReply.newBuilder().setMessage("Hello " + req.getName()).build();
     responseObserver.onNext(reply);
     responseObserver.onCompleted();
   }
 
   @Override
-  public void sayHelloAgain(HelloRequest req, StreamObserver
-<
-HelloReply
->
- responseObserver) {
+  public void sayHelloAgain(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
     HelloReply reply = HelloReply.newBuilder().setMessage("Hello again " + req.getName()).build();
     responseObserver.onNext(reply);
     responseObserver.onCompleted();
   }
 }
-
 ```
 
 假如服务消费者使用的也是Java语言，那么利用protoc插件即可自动生成Client端的Java代码。
@@ -373,17 +357,14 @@ public void greet(String name) {
     return;
   }
   logger.info("Greeting: " + response.getMessage());
-}  
-
+}
 ```
 
 假如服务消费者使用的是PHP语言，那么利用protoc插件即可自动生成Client端的PHP代码。
 
 ```
     $request = new Helloworld\HelloRequest();
-    $request-
->
-setName($name);
+    $request->setName($name);
     list($reply, $status) = $client-
 >
 SayHello($request)-
@@ -399,8 +380,7 @@ SayHelloAgain($request)-
 wait();
     $message = $reply-
 >
-getMessage(); 
-
+getMessage();
 ```
 
 由此可见，gRPC协议的服务描述是通过proto文件来定义接口的，然后再使用protoc来生成不同语言平台的客户端和服务端代码，从而具备跨语言服务调用能力。
@@ -422,6 +402,4 @@ getMessage();
 针对你的业务场景思考一下，假如要进行服务化，你觉得使用哪种服务描述最合适？为什么？
 
 欢迎你在留言区写下自己的思考，与我一起讨论。
-
-
 
