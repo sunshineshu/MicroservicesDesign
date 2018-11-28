@@ -28,11 +28,7 @@
  public interface RestfulService {
      @GET
      @Produces(MediaType.APPLICATION_JSON)
-     List
-<
-User
->
- getUsers(@QueryParam("uid") int uid);
+     List<User> getUsers(@QueryParam("uid") int uid);
 
      @GET
      @Path("/primitive")
@@ -51,11 +47,7 @@ User
 public class RestfulServerDemo implements RestfulService {
 
      @Override
-     public List
-<
-User
->
- getUsers(@CookieParam("uid") int uid) {
+     public List<User> getUsers(@CookieParam("uid") int uid) {
          return Arrays.asList(new User(uid, "name" + uid));
      }
 
