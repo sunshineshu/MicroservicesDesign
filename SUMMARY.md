@@ -10,4 +10,5 @@
 * [07 \| 如何监控微服务调用](07-ru-he-jian-kong-wei-fu-wu-diao-yong.md)
 * [08 \| 如何追踪微服务调用](08-ru-he-zhui-zong-wei-fu-wu-diao-yong.md)
 * [09 \| 微服务治理的手段有哪些](09-wei-fu-wu-zhi-li-de-shou-duan-you-na-xie.md)
+* [10 \| Dubbo框架里的微服务组件](10-dubbokuang-jia-li-de-wei-fu-wu-zu-jian.md)
 
