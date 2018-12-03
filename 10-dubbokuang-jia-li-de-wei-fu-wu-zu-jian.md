@@ -11,11 +11,8 @@
 首先来看服务发布的过程，下面这段代码是服务提供者的XML配置。
 
 ```
-<
-?xml version="1.0" encoding="UTF-8"?
->
-<
-beans xmlns="http://www.springframework.org/schema/beans"
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
     xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd"
@@ -23,33 +20,27 @@ beans xmlns="http://www.springframework.org/schema/beans"
 <
 !-- 提供方应用信息，用于计算依赖关系 --
 >
-<
-dubbo:application name="hello-world-app"  /
->
+<dubbo:application name="hello-world-app"  />
 <
 !-- 使用multicast广播注册中心暴露服务地址 --
 >
 <
-dubbo:registry address="multicast://224.5.6.7:1234" /
->
+dubbo:registry address="multicast://224.5.6.7:1234" />
 <
 !-- 用dubbo协议在20880端口暴露服务 --
 >
 <
-dubbo:protocol name="dubbo" port="20880" /
->
+dubbo:protocol name="dubbo" port="20880" />
 <
 !-- 声明需要暴露的服务接口 --
 >
 <
-dubbo:service interface="com.alibaba.dubbo.demo.DemoService" ref="demoService" /
->
+dubbo:service interface="com.alibaba.dubbo.demo.DemoService" ref="demoService" />
 <
 !-- 和本地bean一样实现服务 --
 >
 <
-bean id="demoService" class="com.alibaba.dubbo.demo.provider.DemoServiceImpl" /
->
+bean id="demoService" class="com.alibaba.dubbo.demo.provider.DemoServiceImpl" />
 <
 /beans
 >
@@ -61,7 +52,6 @@ Dubbo会把以上配置项解析成下面的URL格式：
 
 ```
 dubbo://host-ip:20880/com.alibaba.dubbo.demo.DemoService
-
 ```
 
 然后基于[扩展点自适应机制](http://dubbo.incubator.apache.org/zh-cn/docs/dev/SPI.html)，通过URL的“dubbo://”协议头识别，就会调用DubboProtocol的export\(\)方法，打开服务端口20880，就可以把服务demoService暴露到20880端口了。
@@ -105,7 +95,6 @@ dubbo:reference id="demoService" interface="com.alibaba.dubbo.demo.DemoService" 
 
 ```
 dubbo://com.alibaba.dubbo.demo.DemoService
-
 ```
 
 然后基于扩展点自适应机制，通过URL的“dubbo://”协议头识别，就会调用DubboProtocol的refer\(\)方法，得到服务demoService引用，完成服务引用过程。
@@ -116,7 +105,6 @@ dubbo://com.alibaba.dubbo.demo.DemoService
 
 ```
 registry://multicast://224.5.6.7:1234/com.alibaba.dubbo.registry.RegistryService?export=URL.encode("dubbo://host-ip:20880/com.alibaba.dubbo.demo.DemoService")
-
 ```
 
 然后基于扩展点自适应机制，通过URL的“registry://”协议头识别，就会调用RegistryProtocol的export\(\)方法，将export参数中的提供者URL，注册到注册中心。
@@ -125,7 +113,6 @@ registry://multicast://224.5.6.7:1234/com.alibaba.dubbo.registry.RegistryService
 
 ```
 registry://multicast://224.5.6.7:1234/com.alibaba.dubbo.registry.RegistryService?refer=URL.encode("consummer://host-ip/com.alibaba.dubbo.demo.DemoService")
-
 ```
 
 然后基于扩展点自适应机制，通过URL的“registry://”协议头识别，就会调用RegistryProtocol的refer\(\)方法，基于refer参数中的条件，查询服务demoService的地址。
@@ -254,6 +241,4 @@ dubbo:protocol name="dubbo" serialization="kryo"/
 在以Dubbo为例，学习完服务化框架的具体实现后，你对其中的实现细节还有什么疑问吗？
 
 欢迎你在留言区写下自己的思考，与我一起讨论。
-
-
 
