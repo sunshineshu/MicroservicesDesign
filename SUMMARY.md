@@ -9,4 +9,5 @@
 * [06 \| 如何实现RPC远程服务调用](06-ru-he-shi-xian-rpc-yuan-cheng-fu-wu-diao-yong.md)
 * [07 \| 如何监控微服务调用](07-ru-he-jian-kong-wei-fu-wu-diao-yong.md)
 * [08 \| 如何追踪微服务调用](08-ru-he-zhui-zong-wei-fu-wu-diao-yong.md)
+* [09 \| 微服务治理的手段有哪些](09-wei-fu-wu-zhi-li-de-shou-duan-you-na-xie.md)
 
