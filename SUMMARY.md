@@ -8,4 +8,5 @@
 * [05 \| 如何注册和发现服务](05-ru-he-zhu-ce-he-fa-xian-fu-wu.md)
 * [06 \| 如何实现RPC远程服务调用](06-ru-he-shi-xian-rpc-yuan-cheng-fu-wu-diao-yong.md)
 * [07 \| 如何监控微服务调用](07-ru-he-jian-kong-wei-fu-wu-diao-yong.md)
+* [08 \| 如何追踪微服务调用](08-ru-he-zhui-zong-wei-fu-wu-diao-yong.md)
 
